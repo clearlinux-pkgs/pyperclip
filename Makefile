@@ -1,5 +1,5 @@
 PKG_NAME := pyperclip
-URL = https://files.pythonhosted.org/packages/80/a4/7c65c8fb16787d74f720dfb1dee4227a65058f268e91014e24fd76b18f8b/pyperclip-1.6.5.tar.gz
+URL = https://files.pythonhosted.org/packages/2d/0f/4eda562dffd085945d57c2d9a5da745cfb5228c02bc90f2c74bbac746243/pyperclip-1.7.0.tar.gz
 ARCHIVES = 
 
 include ../common/Makefile.common
