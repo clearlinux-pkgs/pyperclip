@@ -4,36 +4,42 @@
 #
 Name     : pyperclip
 Version  : 1.7.0
-Release  : 10
+Release  : 11
 URL      : https://files.pythonhosted.org/packages/2d/0f/4eda562dffd085945d57c2d9a5da745cfb5228c02bc90f2c74bbac746243/pyperclip-1.7.0.tar.gz
 Source0  : https://files.pythonhosted.org/packages/2d/0f/4eda562dffd085945d57c2d9a5da745cfb5228c02bc90f2c74bbac746243/pyperclip-1.7.0.tar.gz
 Summary  : A cross-platform clipboard module for Python. (Only handles plain text for now.)
 Group    : Development/Tools
 License  : BSD-3-Clause
-Requires: pyperclip-python3
-Requires: pyperclip-python
+Requires: pyperclip-python = %{version}-%{release}
+Requires: pyperclip-python3 = %{version}-%{release}
 BuildRequires : buildreq-distutils3
 
 %description
+Pyperclip is a cross-platform Python module for copy and paste clipboard functions. It works with Python 2 and 3.
+
 `pip install pyperclip`
-        
-        Al Sweigart al@inventwithpython.com
-        BSD License
-        
-        Example Usage
-        =============
-        
-            >>> import pyperclip
-            >>> pyperclip.copy('The text to be copied to the clipboard.')
-            >>> pyperclip.paste()
-            'The text to be copied to the clipboard.'
-        
-        
-        Currently only handles plaintext.
-        
-        On Windows, no additional modules are needed.
-        
-        On Mac, this module makes use of the pbcopy and pbpaste commands, which should come with the os.
+
+Al Sweigart al@inventwithpython.com
+BSD License
+
+Example Usage
+=============
+
+    >>> import pyperclip
+    >>> pyperclip.copy('The text to be copied to the clipboard.')
+    >>> pyperclip.paste()
+    'The text to be copied to the clipboard.'
+
+
+Currently only handles plaintext.
+
+On Windows, no additional modules are needed.
+
+On Mac, this module makes use of the pbcopy and pbpaste commands, which should come with the os.
+
+On Linux, this module makes use of the xclip or xsel commands, which should come with the os. Otherwise run "sudo apt-get install xclip" or "sudo apt-get install xsel" (Note: xsel does not always seem to work.)
+
+Otherwise on Linux, you will need the gtk or PyQt4 modules installed.
 
 %package python
 Summary: python components for the pyperclip package.
@@ -48,6 +54,7 @@ python components for the pyperclip package.
 Summary: python3 components for the pyperclip package.
 Group: Default
 Requires: python3-core
+Provides: pypi(pyperclip)
 
 %description python3
 python3 components for the pyperclip package.
@@ -55,16 +62,25 @@ python3 components for the pyperclip package.
 
 %prep
 %setup -q -n pyperclip-1.7.0
+cd %{_builddir}/pyperclip-1.7.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1537844253
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1583208676
+# -Werror is for werrorists
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
+export MAKEFLAGS=%{?_smp_mflags}
 python3 setup.py build
 
 %install
+export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
