@@ -4,7 +4,7 @@
 #
 Name     : pyperclip
 Version  : 1.8.0
-Release  : 12
+Release  : 13
 URL      : https://files.pythonhosted.org/packages/f6/5b/55866e1cde0f86f5eec59dab5de8a66628cb0d53da74b8dbc15ad8dabda3/pyperclip-1.8.0.tar.gz
 Source0  : https://files.pythonhosted.org/packages/f6/5b/55866e1cde0f86f5eec59dab5de8a66628cb0d53da74b8dbc15ad8dabda3/pyperclip-1.8.0.tar.gz
 Summary  : A cross-platform clipboard module for Python. (Only handles plain text for now.)
